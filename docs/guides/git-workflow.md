@@ -33,7 +33,17 @@ Issue
 Examples: `feat(api): add local ingest endpoint`, `ci(github): add CodeQL and Gitleaks`, `docs(architecture): accept ADR-008`.
 
 - One Issue → one work branch → one or more commits **in that domain**; avoid mixing unrelated domains in the same commit.
-- Commit only when the human asks (agents included).
+- Commit only when the human asks (agents: after `ok` / `prossegue`).
+
+## Owner Cadence
+
+| Signal | Agent action | Git action |
+| --- | --- | --- |
+| `next` | Propose only (trajectory / what / why / trade-off) | none |
+| `ok` / `prossegue` | Implement accepted slice | Issue → branch from `sandbox` → commits → PR → `sandbox` |
+| `green` | Promote validated work | PR `sandbox` → `main` (`Closes #N`) |
+
+`ok` authorizes work into **sandbox**. `green` authorizes promotion to **main**. They are never interchangeable.
 
 ## Author identity
 
