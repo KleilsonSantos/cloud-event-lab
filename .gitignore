@@ -1,0 +1,27 @@
+.DS_Store
+.env
+.env.local
+*.log
+data/
+.idea/
+.vscode/
+*.iml
+
+# Java
+apps/api/target/
+apps/api/.mvn/wrapper/maven-wrapper.jar
+
+# Node
+apps/web/node_modules/
+apps/web/dist/
+apps/web/*.tsbuildinfo
+
+# Terraform / OpenTofu
+**/.terraform/
+**/terraform.tfstate*
+**/*.tfvars
+!*.tfvars.example
+
+# Local emulators
+localstack/
+azurite/
