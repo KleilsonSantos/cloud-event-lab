@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Conventional Commits with optional domain scope.
+# Strips IDE/agent attribution trailers (Co-authored-by: Cursor, etc.).
+# Author must remain: Kleilson Santos <kdsdesign1@gmail.com>
+
+set -euo pipefail
+
+MSG_FILE="${1:-}"
+if [[ -z "$MSG_FILE" || ! -f "$MSG_FILE" ]]; then
+  echo "commit-msg: missing message file" >&2
+  exit 1
+fi
+
+python3 - "$MSG_FILE" <<'PY'
+import re, sys
+path = sys.argv[1]
+with open(path, "r", encoding="utf-8") as f:
+    text = f.read()
+pat = re.compile(
+    r"^(Co-authored-by|Signed-off-by):\s*.*(Cursor|cursoragent@cursor\.com).*\n?",
+    re.IGNORECASE | re.MULTILINE,
+)
+cleaned, n = pat.subn("", text)
+if n:
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned).rstrip() + "\n"
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(cleaned)
+    print(
+        "commit-msg: removed IDE/agent trailer(s) — "
+        "author stays Kleilson Santos <kdsdesign1@gmail.com>",
+        file=sys.stderr,
+    )
+PY
+
+subject="$(head -n 1 "$MSG_FILE" | tr -d '\r')"
+
+if [[ "$subject" =~ ^Merge\ pull\ request ]]; then
+  echo "commit-msg: refuse default GitHub merge subject; use a conventional merge message" >&2
+  exit 1
+fi
+
+python3 - "$subject" <<'PY'
+import re, sys
+subject = sys.argv[1]
+pat = re.compile(
+    r"^(feat|fix|docs|chore|ci|refactor|test|style|perf|build|security)"
+    r"(\([a-z0-9/-]+\))?!?:\s+.+"
+)
+if not pat.match(subject):
+    print(
+        "commit-msg: use Conventional Commits with optional domain scope\n"
+        "  example: feat(api): add local ingest endpoint\n"
+        "  example: ci(github): add CodeQL and Gitleaks\n"
+        "  example: chore(repo): bootstrap license and gitignore",
+        file=sys.stderr,
+    )
+    sys.exit(1)
+sys.exit(0)
+PY
