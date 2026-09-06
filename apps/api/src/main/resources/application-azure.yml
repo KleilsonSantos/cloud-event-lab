@@ -1,0 +1,11 @@
+# Azure profile — adapters Phase 2/3. Azurite on 10000-10002 (LOCAL EMULATOR).
+spring:
+  config:
+    activate:
+      on-profile: azure
+
+lab:
+  cloud:
+    provider: azure
+  azure:
+    storage-connection: UseDevelopmentStorage=true
