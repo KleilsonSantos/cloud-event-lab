@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cel-postgres
+    environment:
+      POSTGRES_DB: cloudeventlab
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab
+    ports:
+      - "5433:5432"
+    volumes:
+      - cel_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d cloudeventlab"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - cel_net
+
+  # Optional: docker compose --profile aws up
+  localstack:
+    profiles: ["aws"]
+    image: localstack/localstack:4.3
+    container_name: cel-localstack
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: s3,sqs,sns,dynamodb
+      DEBUG: "0"
+    volumes:
+      - cel_localstack_data:/var/lib/localstack
+    networks:
+      - cel_net
+
+  # Optional: docker compose --profile azure up
+  azurite:
+    profiles: ["azure"]
+    image: mcr.microsoft.com/azure-storage/azurite:3.34.0
+    container_name: cel-azurite
+    command: "azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0 --loose"
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
+    volumes:
+      - cel_azurite_data:/data
+    networks:
+      - cel_net
+
+networks:
+  cel_net:
+    name: cel_net
+
+volumes:
+  cel_pg_data:
+  cel_localstack_data:
+  cel_azurite_data:
