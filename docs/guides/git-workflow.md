@@ -37,11 +37,11 @@ Examples: `feat(api): add local ingest endpoint`, `ci(github): add CodeQL and Gi
 
 ## Author identity
 
-**Author and Committer:** `Kleilson Santos <kdsdesign1@gmail.com>`
-
+- Content commits: **Author and Committer** `Kleilson Santos <kdsdesign1@gmail.com>`
 - **Never** `Co-authored-by: Cursor` / `cursoragent@cursor.com` / other IDE agent trailers.
 - PR bodies must **not** include “Made with Cursor”; attribution is the human author, not the tool.
-- This clone already uses **local** `user.name` / `user.email` / `core.hooksPath=.githooks` (same pattern as your other GitHub labs). Fresh clones need that local trio once — `gh` auth does not set Git commit identity.
+- `gh pr merge --merge` may author merge commits as the GitHub noreply identity; CI allows those only when the subject starts with `merge:`.
+- This clone uses local `user.name` / `user.email` / `core.hooksPath=.githooks`. Fresh clones need that local trio once — `gh` auth does not set Git commit identity.
 - `.githooks/commit-msg` strips IDE trailers; CI runs `scripts/check-commit-messages.sh` on PRs.
 
 ## Dependabot
@@ -56,7 +56,10 @@ Workflow: `.github/workflows/ci.yml`
 
 | Job | Purpose |
 | --- | --- |
+| `commit-attribution` | Block Cursor co-author trailers / wrong content authors |
 | `api` | Maven tests |
 | `web` | npm build (+ soft npm audit) |
 | `security` | Gitleaks, Trivy fs, ShellCheck |
 | `codeql` | SAST Java + JS/TS |
+
+Pipeline event index: workflow `delivery-observability` (see [delivery-observability.md](./delivery-observability.md)).
