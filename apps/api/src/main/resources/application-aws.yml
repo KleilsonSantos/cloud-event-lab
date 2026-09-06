@@ -1,0 +1,13 @@
+# AWS profile — adapters Phase 2/3. Requires LocalStack on :4566 (LOCAL EMULATOR).
+spring:
+  config:
+    activate:
+      on-profile: aws
+
+lab:
+  cloud:
+    provider: aws
+  aws:
+    endpoint: http://localhost:4566
+    region: us-east-1
+    # Credentials/auth for LocalStack Hobby — see docs/aws/README.md (do not commit secrets)
