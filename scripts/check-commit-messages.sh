@@ -15,6 +15,7 @@ EXPECTED_NAME="Kleilson Santos"
 EXPECTED_EMAIL="kdsdesign1@gmail.com"
 # GitHub "Merge pull request" / gh pr merge --merge authors as account noreply.
 GITHUB_NOREPLY='kleilsonsantos <63037173+KleilsonSantos@users.noreply.github.com>'
+DEPENDABOT='dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>'
 fail=0
 
 while IFS= read -r hash; do
@@ -30,6 +31,10 @@ while IFS= read -r hash; do
     continue
   fi
   if [[ "$subject" == merge:* && "$author" == "$GITHUB_NOREPLY" ]]; then
+    continue
+  fi
+  # Dependabot version bumps (chore(deps): / chore(deps-dev):)
+  if [[ "$author" == "$DEPENDABOT" && ( "$subject" == chore\(deps\):* || "$subject" == chore\(deps-dev\):* ) ]]; then
     continue
   fi
   echo "FAIL $hash  unexpected author '$author' (want ${EXPECTED_NAME} <${EXPECTED_EMAIL}>)"
