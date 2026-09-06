@@ -22,6 +22,7 @@ apps/web/*.tsbuildinfo
 **/*.tfvars
 !*.tfvars.example
 
-# Local emulators
-localstack/
-azurite/
+# Local caches / delivery CI events
+.cache/
+delivery-ci-events.jsonl
+

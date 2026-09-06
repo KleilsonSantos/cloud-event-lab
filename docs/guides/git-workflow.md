@@ -56,7 +56,10 @@ Workflow: `.github/workflows/ci.yml`
 
 | Job | Purpose |
 | --- | --- |
+| `commit-attribution` | Block Cursor co-author trailers / wrong content authors |
 | `api` | Maven tests |
 | `web` | npm build (+ soft npm audit) |
 | `security` | Gitleaks, Trivy fs, ShellCheck |
 | `codeql` | SAST Java + JS/TS |
+
+Pipeline event index: workflow `delivery-observability` (see [delivery-observability.md](./delivery-observability.md)).
