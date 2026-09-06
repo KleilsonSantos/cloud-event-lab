@@ -1,0 +1,13 @@
+# GCP profile — Pub/Sub emulator via PUBSUB_EMULATOR_HOST (LOCAL EMULATOR).
+# GCS object storage: REAL_CLOUD or keep FS APPROX until justified.
+spring:
+  config:
+    activate:
+      on-profile: gcp
+
+lab:
+  cloud:
+    provider: gcp
+  gcp:
+    project-id: cloud-event-lab-local
+    pubsub-emulator-host: localhost:8085

@@ -1,0 +1,30 @@
+version: 2
+updates:
+  # Version PRs target sandbox (promote to main via PR). Dependabot *security*
+  # update PRs may still target the default branch — leave security auto-PRs off
+  # in repo Settings if you want to avoid that (see SECURITY.md).
+  - package-ecosystem: maven
+    directory: /apps/api
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    target-branch: sandbox
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: /apps/web
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    target-branch: sandbox
+    labels:
+      - dependencies
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    target-branch: sandbox
+    labels:
+      - dependencies
