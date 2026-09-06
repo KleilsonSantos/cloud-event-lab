@@ -51,6 +51,7 @@ Examples: `feat(api): add local ingest endpoint`, `ci(github): add CodeQL and Gi
 - **Never** `Co-authored-by: Cursor` / `cursoragent@cursor.com` / other IDE agent trailers.
 - PR bodies must **not** include “Made with Cursor”; attribution is the human author, not the tool.
 - `gh pr merge --merge` may author merge commits as the GitHub noreply identity; CI allows those only when the subject starts with `merge:`.
+- Dependabot commits (`dependabot[bot]` with `chore(deps):` / `chore(deps-dev):`) are allowed by attribution CI.
 - This clone uses local `user.name` / `user.email` / `core.hooksPath=.githooks`. Fresh clones need that local trio once — `gh` auth does not set Git commit identity.
 - `.githooks/commit-msg` strips IDE trailers; CI runs `scripts/check-commit-messages.sh` on PRs.
 
