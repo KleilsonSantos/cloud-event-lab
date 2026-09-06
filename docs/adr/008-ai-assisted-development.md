@@ -9,11 +9,12 @@ Coding agents (IDE chat, GitHub agents, future MCP) will edit this repository. T
 
 ## Decision
 
-1. **`AGENTS.md`** is the agent entry point (source order + hard constraints).  
+1. **`AGENTS.md`** is the agent entry point (source order, hard constraints, **Owner Cadence** `next` / `ok` / `green`).  
 2. **GitHub agent personas** live under `.github/agents/` for review/planning helpers scoped to this lab.  
 3. **Optional runbooks** live under `docs/prompts/` (versioned markdown); they are docs-as-code, not runtime product SSOT.  
 4. AI must follow ADRs 001–007 for architecture; AI must not add an “AI product” surface to the Event Platform unless a future ADR explicitly decides that.  
-5. External project references or copy-paste identity from other repos are **opt-in by human request only**.
+5. External project references or copy-paste identity from other repos are **opt-in by human request only**.  
+6. Cadence: `next` = proposal only; `ok` / `prossegue` = implement into sandbox flow; `green` = promote sandbox → main.
 
 ## Alternatives
 

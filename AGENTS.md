@@ -37,6 +37,25 @@ If a summary conflicts with an ADR or the architecture proposal, the ADR/proposa
 - Do **not** deploy LocalStack/Azurite/emulators as public “production cloud”.
 - Inspect before install: run `scripts/preflight.sh` before spawning duplicate containers/ports.
 - Prefer small, phased changes aligned to the implementation plan.
-- Commit only when the human asks.
+- Commit only when the human asks (or after `ok` / `prossegue` in Owner Cadence).
 - Git author/committer: **Kleilson Santos \<kdsdesign1@gmail.com\>** only — never `Co-authored-by: Cursor` / `cursoragent@cursor.com` / “Made with Cursor” on PRs.
 - Do not reference or couple this repo to external personal projects unless the human explicitly asks.
+
+## Owner Cadence
+
+| Signal | Meaning |
+| --- | --- |
+| `next` | **Proposal only** — plan the slice; do not implement, commit, push, or merge |
+| `ok` / `prossegue` | **Implement** the accepted slice (Issue → branch → semantic commits → PR → `sandbox`) |
+| `green` | **Promote** validated `sandbox` → `main` (and close Issues with `Closes #N`) |
+
+Before every `next`, provide:
+
+1. Trajectory
+2. What
+3. Why now
+4. Analogy (optional, short)
+5. Trade-off
+6. Wait for `ok`
+
+Do not treat casual conversation as `ok`. Do not treat `ok` as `green`.
