@@ -1,9 +1,8 @@
 package dev.kleilson.cloudeventlab.adapters.azure;
 
 /**
- * Placeholder for Azure SDK adapters (Blob / Queue via Azurite).
- *
- * <p>Type: LOCAL EMULATOR (Azurite). Activate with profile {@code azure}.
+ * Azure adapter package. Blob object storage: {@link AzureBlobObjectStorageAdapter} (Azurite =
+ * LOCAL EMULATOR). Queue / Service Bus messaging lands in Phase 3.
  */
 public final class AzureAdaptersPlaceholder {
   private AzureAdaptersPlaceholder() {}

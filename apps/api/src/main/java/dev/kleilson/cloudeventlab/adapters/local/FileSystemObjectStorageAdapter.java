@@ -6,11 +6,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
 
+/**
+ * Local filesystem object storage. Used for {@code local}/{@code test} and as GCS APPROX under
+ * {@code gcp} until a REAL_CLOUD GCS adapter is justified.
+ */
 @Component
-@Profile({"local", "default", "test"})
+@ConditionalOnExpression(
+    "!'${lab.cloud.provider:local}'.equals('aws') and !'${lab.cloud.provider:local}'.equals('azure')")
 public class FileSystemObjectStorageAdapter implements ObjectStoragePort {
 
   private final Path root;
