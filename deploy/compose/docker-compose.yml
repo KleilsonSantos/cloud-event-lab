@@ -51,7 +51,7 @@ services:
   # Optional: docker compose --profile gcp up
   pubsub:
     profiles: ["gcp"]
-    image: gcr.io/google.com/cloudsdktool/google-cloud-cli:516.0.0-emulators
+    image: gcr.io/google.com/cloudsdktool/google-cloud-cli:emulators
     container_name: cel-pubsub
     command: gcloud beta emulators pubsub start --host-port=0.0.0.0:8085
     ports:

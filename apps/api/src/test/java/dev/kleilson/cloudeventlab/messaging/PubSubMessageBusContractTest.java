@@ -15,7 +15,7 @@ class PubSubMessageBusContractTest {
   @SuppressWarnings("resource")
   static GenericContainer<?> pubsub =
       new GenericContainer<>(
-              DockerImageName.parse("gcr.io/google.com/cloudsdktool/google-cloud-cli:516.0.0-emulators"))
+              DockerImageName.parse("gcr.io/google.com/cloudsdktool/google-cloud-cli:emulators"))
           .withExposedPorts(8085)
           .withCommand(
               "gcloud", "beta", "emulators", "pubsub", "start", "--host-port=0.0.0.0:8085");
