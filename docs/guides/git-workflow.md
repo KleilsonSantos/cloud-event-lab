@@ -68,7 +68,7 @@ Workflow: `.github/workflows/ci.yml`
 | Job | Purpose |
 | --- | --- |
 | `commit-attribution` | Block Cursor co-author trailers / wrong content authors |
-| `api` | Maven tests |
+| `api` | Maven tests + package; Trivy SCA (rootfs) + Trivy image |
 | `web` | npm build (+ soft npm audit) |
 | `security` | Gitleaks, Trivy fs, ShellCheck |
 | `codeql` | SAST Java + JS/TS |
