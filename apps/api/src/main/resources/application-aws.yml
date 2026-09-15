@@ -1,4 +1,4 @@
-# AWS profile — adapters Phase 2/3. Requires LocalStack on :4566 (LOCAL EMULATOR).
+# AWS profile — S3 via LocalStack (LOCAL EMULATOR). Message bus still needs profile `local` until Phase 3.
 spring:
   config:
     activate:
@@ -10,4 +10,10 @@ lab:
   aws:
     endpoint: http://localhost:4566
     region: us-east-1
-    # Credentials/auth for LocalStack Hobby — see docs/aws/README.md (do not commit secrets)
+    access-key-id: test
+    secret-access-key: test
+    use-static-credentials: true
+    s3:
+      bucket: cloud-event-lab
+    # Hobby LocalStack may require LOCALSTACK_AUTH_TOKEN in the environment — see docs/aws/README.md.
+    # Do not commit secrets.

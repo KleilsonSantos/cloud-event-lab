@@ -1,0 +1,9 @@
+# Public Azurite emulator account key (Microsoft-documented; not a production secret).
+# https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite
+title = "cloud-event-lab gitleaks"
+
+[allowlist]
+description = "Azurite well-known LOCAL EMULATOR credentials"
+regexes = [
+  '''Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==''',
+]

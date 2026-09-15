@@ -69,9 +69,11 @@ Labs AWS/Azure: `docker compose --profile aws|azure up -d` — ver `docs/aws`, `
 | Scaffold API (domínio, ports, local adapters, REST, security) | ✅ |
 | Scaffold web (dashboard lab) | ✅ |
 | Phase 1 local core (ingest → process → query, Testcontainers) | ✅ |
+| Phase 2 object storage (FS + LocalStack S3 + Azurite Blob + contract tests) | ✅ |
 | Compose Postgres (+ profiles LocalStack/Azurite) | ✅ |
 | Testes unit + API integration + Postgres IT | ✅ |
-| AWS / Azure / GCP SDK adapters | ⚪ Phase 2–3 |
+| AWS / Azure messaging (+ GCP Pub/Sub) adapters | ⚪ Phase 3 |
+| GCS object storage | ⚪ REAL_CLOUD / FS APPROX under `gcp` (no official full emulator) |
 | CI security (Gitleaks / Trivy / CodeQL) + agent surface | ✅ |
 | K8s / IaC / OTel / SCA Maven endurecido / live demo | ⚪ Phase 4–6 |
 

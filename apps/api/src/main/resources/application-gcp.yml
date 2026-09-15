@@ -1,5 +1,6 @@
 # GCP profile — Pub/Sub emulator via PUBSUB_EMULATOR_HOST (LOCAL EMULATOR).
-# GCS object storage: REAL_CLOUD or keep FS APPROX until justified.
+# GCS object storage: no full official emulator for apps → FS APPROX (lab.cloud.provider=gcp)
+# or REAL_CLOUD later. Do not claim GCS parity.
 spring:
   config:
     activate:
