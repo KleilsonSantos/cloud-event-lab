@@ -1,8 +1,8 @@
 package dev.kleilson.cloudeventlab.adapters.azure;
 
 /**
- * Azure adapter package. Blob object storage: {@link AzureBlobObjectStorageAdapter} (Azurite =
- * LOCAL EMULATOR). Queue / Service Bus messaging lands in Phase 3.
+ * Azure adapter package. Blob: {@link AzureBlobObjectStorageAdapter}. Queue: {@link
+ * AzureQueueMessageBusAdapter} (Azurite = LOCAL EMULATOR). Service Bus DLQ = APPROX / Phase later.
  */
 public final class AzureAdaptersPlaceholder {
   private AzureAdaptersPlaceholder() {}

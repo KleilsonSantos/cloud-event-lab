@@ -1,4 +1,4 @@
-# Azure profile — Blob via Azurite (LOCAL EMULATOR). Message bus still needs profile `local` until Phase 3.
+# Azure profile — Blob + Queue via Azurite (LOCAL EMULATOR).
 spring:
   config:
     activate:
@@ -12,5 +12,7 @@ lab:
     storage-connection: UseDevelopmentStorage=true
     blob:
       container: cloud-event-lab
-      # Host endpoint when Azurite is published on default compose ports.
       endpoint: http://127.0.0.1:10000/devstoreaccount1
+    queue:
+      endpoint: http://127.0.0.1:10001/devstoreaccount1
+      visibility-seconds: 30
