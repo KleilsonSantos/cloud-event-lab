@@ -7,6 +7,7 @@
 | API Postgres IT (Testcontainers; skipped if Docker unavailable) | ✅ Phase 1 |
 | ObjectStorage portability (FS + LocalStack S3 + Azurite; skip without Docker) | ✅ Phase 2 |
 | MessageBus portability (in-memory + SQS + Azure Queue + Pub/Sub; skip without Docker) | ✅ Phase 3 |
+| kind manifests + OTel profile (manual / script bootstrap) | ✅ Phase 4 |
 | E2E browser | optional later |
 | Infra validation | Phase 5 |
 

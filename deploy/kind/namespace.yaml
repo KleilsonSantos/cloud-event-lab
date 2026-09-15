@@ -1,5 +1,6 @@
-# Placeholder — Phase 4
 apiVersion: v1
 kind: Namespace
 metadata:
   name: cloud-event-lab
+  labels:
+    app.kubernetes.io/part-of: cloud-event-lab
