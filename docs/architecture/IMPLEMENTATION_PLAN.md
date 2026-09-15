@@ -26,10 +26,10 @@ Ordem: **entrega incremental**. Cada fase termina com checklist verificável.
 
 ## Phase 2 — Object storage port
 
-- [ ] `ObjectStoragePort` + adapter FS  
-- [ ] Adapter S3 (LocalStack) — documentar auth LocalStack  
-- [ ] Adapter Azure Blob (Azurite)  
-- [ ] Teste de portabilidade: mesmo contrato nos 3 adapters disponíveis  
+- [x] `ObjectStoragePort` + adapter FS  
+- [x] Adapter S3 (LocalStack) — documentar auth LocalStack  
+- [x] Adapter Azure Blob (Azurite)  
+- [x] Teste de portabilidade: mesmo contrato nos 3 adapters disponíveis  
 
 ## Phase 3 — Messaging port
 
