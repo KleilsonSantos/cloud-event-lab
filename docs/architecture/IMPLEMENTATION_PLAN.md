@@ -41,9 +41,9 @@ Ordem: **entrega incremental**. Cada fase termina com checklist verificável.
 
 ## Phase 4 — Kubernetes + observability
 
-- [ ] kind cluster + Deployment/Service/probes/resources  
-- [ ] OpenTelemetry instrumentation  
-- [ ] docker-compose profile `otel`  
+- [x] kind cluster + Deployment/Service/probes/resources  
+- [x] OpenTelemetry instrumentation  
+- [x] docker-compose profile `otel`  
 
 ## Phase 5 — IaC + DevSecOps
 
