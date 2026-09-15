@@ -2,7 +2,7 @@
 
 Ordem: **entrega incremental**. Cada fase termina com checklist verificável.
 
-## Phase 0 — Foundation (atual)
+## Phase 0 — Foundation
 
 - [x] Nome do repo e README honesto  
 - [x] Matriz multi-cloud  
@@ -17,12 +17,12 @@ Ordem: **entrega incremental**. Cada fase termina com checklist verificável.
 
 ## Phase 1 — Local profile (core business)
 
-- [ ] Ingest `POST /api/events`  
-- [ ] Persistência Postgres  
-- [ ] Processamento assíncrono local (idempotency key)  
-- [ ] `GET /api/events/{id}` + `GET /health`  
-- [ ] Testes unit + integration (Testcontainers Postgres)  
-- [ ] UI mínima (criar/listar eventos)  
+- [x] Ingest `POST /api/events`  
+- [x] Persistência Postgres  
+- [x] Processamento assíncrono local (idempotency key)  
+- [x] `GET /api/events/{id}` + `GET /health`  
+- [x] Testes unit + integration (H2) + Testcontainers Postgres  
+- [x] UI mínima (criar/listar eventos, idempotency replay)  
 
 ## Phase 2 — Object storage port
 
