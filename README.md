@@ -68,8 +68,9 @@ Labs AWS/Azure: `docker compose --profile aws|azure up -d` — ver `docs/aws`, `
 | Arquitetura + ADRs + matriz | ✅ |
 | Scaffold API (domínio, ports, local adapters, REST, security) | ✅ |
 | Scaffold web (dashboard lab) | ✅ |
+| Phase 1 local core (ingest → process → query, Testcontainers) | ✅ |
 | Compose Postgres (+ profiles LocalStack/Azurite) | ✅ |
-| Testes unit + API integration | ✅ |
+| Testes unit + API integration + Postgres IT | ✅ |
 | AWS / Azure / GCP SDK adapters | ⚪ Phase 2–3 |
 | CI security (Gitleaks / Trivy / CodeQL) + agent surface | ✅ |
 | K8s / IaC / OTel / SCA Maven endurecido / live demo | ⚪ Phase 4–6 |

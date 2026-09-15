@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
@@ -45,9 +46,17 @@ public class EventApplicationService {
     String key = "events/" + event.getId() + ".json";
     storage.put(key, payloadJson.getBytes(StandardCharsets.UTF_8), "application/json");
     event.markQueued(key);
-    CloudEvent saved = events.save(event);
-    publishAfterCommit(QUEUE_EVENTS, saved.getId().toString());
-    return saved;
+    try {
+      CloudEvent saved = events.save(event);
+      publishAfterCommit(QUEUE_EVENTS, saved.getId().toString());
+      return saved;
+    } catch (DataIntegrityViolationException ex) {
+      // Concurrent insert with the same idempotency key — return the winner.
+      log.info("Idempotent race for key={}, reloading existing", idempotencyKey);
+      return events
+          .findByIdempotencyKey(idempotencyKey)
+          .orElseThrow(() -> ex);
+    }
   }
 
   private void publishAfterCommit(String queue, String body) {
