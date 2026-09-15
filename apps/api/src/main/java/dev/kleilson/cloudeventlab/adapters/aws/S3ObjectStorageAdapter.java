@@ -4,6 +4,7 @@ import dev.kleilson.cloudeventlab.application.port.ObjectStoragePort;
 import jakarta.annotation.PreDestroy;
 import java.net.URI;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
@@ -35,6 +36,7 @@ public class S3ObjectStorageAdapter implements ObjectStoragePort {
   private final S3Client s3;
   private final String bucket;
 
+  @Autowired
   public S3ObjectStorageAdapter(
       @Value("${lab.aws.endpoint}") String endpoint,
       @Value("${lab.aws.region:us-east-1}") String region,
