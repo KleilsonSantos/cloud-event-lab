@@ -59,6 +59,20 @@ services:
     networks:
       - cel_net
 
+  # Optional: docker compose --profile otel up
+  otel-collector:
+    profiles: ["otel"]
+    image: otel/opentelemetry-collector-contrib:0.120.0
+    container_name: cel-otel-collector
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro
+    ports:
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+    networks:
+      - cel_net
+
 networks:
   cel_net:
     name: cel_net

@@ -15,10 +15,10 @@
 Mesma aplicação (domínio + API)
         │
         ├── profile local     → Postgres + FS + bus in-memory   ✅ scaffold
-        ├── profile aws       → LocalStack (emulação)           🟡 adapters Phase 2/3
-        ├── profile azure     → Azurite (+ SB emulator opc.)    🟡 adapters Phase 2/3
-        ├── profile gcp       → Pub/Sub emulator (gcloud)       🟡 adapters Phase 3
-        └── profile kubernetes    → kind                              ⚪ Phase 4
+        ├── profile aws       → LocalStack (emulação)           ✅ Phase 2/3
+        ├── profile azure     → Azurite (+ SB emulator opc.)    ✅ Phase 2/3
+        ├── profile gcp       → Pub/Sub emulator (gcloud)       ✅ Phase 3
+        └── profile otel      → OTel collector (+ kind demo)    ✅ Phase 4
 ```
 
 ## O que este projeto NÃO é
@@ -71,11 +71,12 @@ Labs AWS/Azure/GCP: `docker compose --profile aws|azure|gcp up -d` — ver `docs
 | Phase 1 local core (ingest → process → query, Testcontainers) | ✅ |
 | Phase 2 object storage (FS + LocalStack S3 + Azurite Blob + contract tests) | ✅ |
 | Phase 3 messaging (in-memory + LocalStack SQS + Azurite Queue + Pub/Sub emulator) | ✅ |
-| Compose Postgres (+ profiles LocalStack/Azurite/PubSub) | ✅ |
+| Phase 4 kind + OpenTelemetry (manifests, probes, compose `otel`) | ✅ |
+| Compose Postgres (+ profiles LocalStack/Azurite/PubSub/otel) | ✅ |
 | Testes unit + API integration + Postgres IT | ✅ |
-| GCS object storage | ⚪ REAL_CLOUD / FS APPROX under `gcp` (no official full emulator) |
 | CI security (Gitleaks / Trivy / CodeQL) + agent surface | ✅ |
-| K8s / IaC / OTel / SCA Maven endurecido / live demo | ⚪ Phase 4–6 |
+| GCS object storage | ⚪ REAL_CLOUD / FS APPROX under `gcp` (no official full emulator) |
+| K8s managed (EKS/AKS/GKE) / IaC / SCA Maven endurecido / live demo | ⚪ Phase 5–6 |
 
 ## Portas
 
@@ -87,7 +88,7 @@ Labs AWS/Azure/GCP: `docker compose --profile aws|azure|gcp up -d` — ver `docs
 | LocalStack | `4566` |
 | Azurite | `10000` / `10001` / `10002` |
 | GCP Pub/Sub emulator | `8085` |
-| OTel collector (futuro) | `4317` |
+| OTel collector | `4317` (gRPC) / `4318` (HTTP) |
 
 ## Licença
 
