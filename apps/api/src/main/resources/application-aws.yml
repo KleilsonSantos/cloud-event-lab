@@ -1,4 +1,4 @@
-# AWS profile — S3 via LocalStack (LOCAL EMULATOR). Message bus still needs profile `local` until Phase 3.
+# AWS profile — S3 + SQS via LocalStack (LOCAL EMULATOR).
 spring:
   config:
     activate:
@@ -15,5 +15,8 @@ lab:
     use-static-credentials: true
     s3:
       bucket: cloud-event-lab
+    sqs:
+      wait-seconds: 5
+      visibility-seconds: 30
     # Hobby LocalStack may require LOCALSTACK_AUTH_TOKEN in the environment — see docs/aws/README.md.
     # Do not commit secrets.

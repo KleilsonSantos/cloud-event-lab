@@ -63,6 +63,18 @@ public class AzureBlobObjectStorageAdapter implements ObjectStoragePort {
     return configured;
   }
 
+  /** Expand {@code UseDevelopmentStorage=true} for Azurite Queue (port 10001 by default). */
+  public static String resolveQueueConnection(String configured, String queueEndpoint) {
+    if (configured != null && configured.trim().equalsIgnoreCase("UseDevelopmentStorage=true")) {
+      return "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey="
+          + AZURITE_ACCOUNT_KEY
+          + ";QueueEndpoint="
+          + queueEndpoint
+          + ";";
+    }
+    return configured;
+  }
+
   @Override
   public String put(String key, byte[] content, String contentType) {
     BlockBlobClient blob = container.getBlobClient(key).getBlockBlobClient();
