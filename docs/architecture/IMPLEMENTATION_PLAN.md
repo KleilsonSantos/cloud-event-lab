@@ -33,11 +33,11 @@ Ordem: **entrega incremental**. Cada fase termina com checklist verificável.
 
 ## Phase 3 — Messaging port
 
-- [ ] `MessageBusPort` + adapter local  
-- [ ] Adapter SQS (LocalStack)  
-- [ ] Adapter Azure Queue (Azurite) e/ou Service Bus emulator  
-- [ ] Adapter Pub/Sub (gcloud emulator)  
-- [ ] DLQ/retry onde o broker permitir; senão documentar APPROX  
+- [x] `MessageBusPort` + adapter local  
+- [x] Adapter SQS (LocalStack)  
+- [x] Adapter Azure Queue (Azurite) e/ou Service Bus emulator  
+- [x] Adapter Pub/Sub (gcloud emulator)  
+- [x] DLQ/retry onde o broker permitir; senão documentar APPROX  
 
 ## Phase 4 — Kubernetes + observability
 

@@ -59,7 +59,7 @@ curl -u lab:lab-change-me -H 'Content-Type: application/json' \
   http://localhost:8080/api/events
 ```
 
-Labs AWS/Azure: `docker compose --profile aws|azure up -d` — ver `docs/aws`, `docs/azure`, `docs/gcp`.
+Labs AWS/Azure/GCP: `docker compose --profile aws|azure|gcp up -d` — ver `docs/aws`, `docs/azure`, `docs/gcp`.
 
 ## Status (honestidade)
 
@@ -70,9 +70,9 @@ Labs AWS/Azure: `docker compose --profile aws|azure up -d` — ver `docs/aws`, `
 | Scaffold web (dashboard lab) | ✅ |
 | Phase 1 local core (ingest → process → query, Testcontainers) | ✅ |
 | Phase 2 object storage (FS + LocalStack S3 + Azurite Blob + contract tests) | ✅ |
-| Compose Postgres (+ profiles LocalStack/Azurite) | ✅ |
+| Phase 3 messaging (in-memory + LocalStack SQS + Azurite Queue + Pub/Sub emulator) | ✅ |
+| Compose Postgres (+ profiles LocalStack/Azurite/PubSub) | ✅ |
 | Testes unit + API integration + Postgres IT | ✅ |
-| AWS / Azure messaging (+ GCP Pub/Sub) adapters | ⚪ Phase 3 |
 | GCS object storage | ⚪ REAL_CLOUD / FS APPROX under `gcp` (no official full emulator) |
 | CI security (Gitleaks / Trivy / CodeQL) + agent surface | ✅ |
 | K8s / IaC / OTel / SCA Maven endurecido / live demo | ⚪ Phase 4–6 |
