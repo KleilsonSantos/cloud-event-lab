@@ -52,7 +52,7 @@ public class AzureBlobObjectStorageAdapter implements ObjectStoragePort {
     }
   }
 
-  static String resolveConnection(String configured, String blobEndpoint) {
+  public static String resolveConnection(String configured, String blobEndpoint) {
     if (configured != null && configured.trim().equalsIgnoreCase("UseDevelopmentStorage=true")) {
       return "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey="
           + AZURITE_ACCOUNT_KEY
