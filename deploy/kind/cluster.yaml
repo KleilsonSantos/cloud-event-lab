@@ -1,6 +1,10 @@
-# kind cluster config (Phase 4)
+# Kind local cluster — OPEN SOURCE ALTERNATIVE / APPROX vs EKS·AKS·GKE
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 name: cloud-event-lab
 nodes:
   - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 8080
+        protocol: TCP

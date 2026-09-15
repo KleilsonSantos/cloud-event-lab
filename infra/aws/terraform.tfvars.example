@@ -1,0 +1,3 @@
+# Copy to terraform.tfvars locally — never commit real account values.
+aws_region   = "us-east-1"
+project_name = "cloud-event-lab"

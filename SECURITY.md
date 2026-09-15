@@ -26,7 +26,9 @@ We aim to respond within 5 business days.
 | Code scanning (CodeQL)          | On via CI             | Java + JavaScript/TypeScript                       |
 | Gitleaks                        | On via CI             | Secrets in git history / diff                      |
 | Trivy (fs)                      | On via CI             | CRITICAL/HIGH, ignore-unfixed                      |
-| npm audit                       | Soft gate in CI       | `continue-on-error` until Phase 5 hardens          |
+| Maven SCA (Trivy rootfs)        | **Fail-closed** (CI)  | Packaged `apps/api/target` after `mvn package`     |
+| Trivy (image)                   | **Fail-closed** (CI)  | API image built from `apps/api/Dockerfile`         |
+| npm audit                       | Soft gate in CI       | `continue-on-error` (web); Maven gate is hard      |
 
 Owner checklist: repo **Settings → Code security** — keep alerts on; leave security-update PRs off unless you accept `main`-targeted Dependabot merges.
 

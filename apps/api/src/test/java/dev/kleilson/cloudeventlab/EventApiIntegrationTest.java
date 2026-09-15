@@ -72,4 +72,45 @@ class EventApiIntegrationTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.service").value("cloud-event-lab-api"));
   }
+
+  @Test
+  void healthAliasIsPublic() throws Exception {
+    mockMvc.perform(get("/health")).andExpect(status().isOk()).andExpect(jsonPath("$.status").value("UP"));
+  }
+
+  @Test
+  void idempotentReplayReturnsSameEvent() throws Exception {
+    String key = "it-idem-" + System.nanoTime();
+    String body =
+        """
+        {
+          "type": "order.created",
+          "source": "integration-test",
+          "idempotencyKey": "%s",
+          "payloadJson": "{\\"orderId\\":\\"B2\\"}"
+        }
+        """
+            .formatted(key);
+
+    MvcResult first =
+        mockMvc
+            .perform(
+                post("/api/events")
+                    .with(httpBasic("lab", "lab-change-me"))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(body))
+            .andExpect(status().isAccepted())
+            .andReturn();
+    String id1 =
+        com.jayway.jsonpath.JsonPath.read(first.getResponse().getContentAsString(), "$.id");
+
+    mockMvc
+        .perform(
+            post("/api/events")
+                .with(httpBasic("lab", "lab-change-me"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+        .andExpect(status().isAccepted())
+        .andExpect(jsonPath("$.id").value(id1));
+  }
 }

@@ -15,10 +15,10 @@
 Mesma aplicação (domínio + API)
         │
         ├── profile local     → Postgres + FS + bus in-memory   ✅ scaffold
-        ├── profile aws       → LocalStack (emulação)           🟡 adapters Phase 2/3
-        ├── profile azure     → Azurite (+ SB emulator opc.)    🟡 adapters Phase 2/3
-        ├── profile gcp       → Pub/Sub emulator (gcloud)       🟡 adapters Phase 3
-        └── profile kubernetes    → kind                              ⚪ Phase 4
+        ├── profile aws       → LocalStack (emulação)           ✅ Phase 2/3
+        ├── profile azure     → Azurite (+ SB emulator opc.)    ✅ Phase 2/3
+        ├── profile gcp       → Pub/Sub emulator (gcloud)       ✅ Phase 3
+        └── profile otel      → OTel collector (+ kind demo)    ✅ Phase 4
 ```
 
 ## O que este projeto NÃO é
@@ -59,7 +59,7 @@ curl -u lab:lab-change-me -H 'Content-Type: application/json' \
   http://localhost:8080/api/events
 ```
 
-Labs AWS/Azure: `docker compose --profile aws|azure up -d` — ver `docs/aws`, `docs/azure`, `docs/gcp`.
+Labs AWS/Azure/GCP: `docker compose --profile aws|azure|gcp up -d` — ver `docs/aws`, `docs/azure`, `docs/gcp`.
 
 ## Status (honestidade)
 
@@ -68,11 +68,15 @@ Labs AWS/Azure: `docker compose --profile aws|azure up -d` — ver `docs/aws`, `
 | Arquitetura + ADRs + matriz | ✅ |
 | Scaffold API (domínio, ports, local adapters, REST, security) | ✅ |
 | Scaffold web (dashboard lab) | ✅ |
-| Compose Postgres (+ profiles LocalStack/Azurite) | ✅ |
-| Testes unit + API integration | ✅ |
-| AWS / Azure / GCP SDK adapters | ⚪ Phase 2–3 |
+| Phase 1 local core (ingest → process → query, Testcontainers) | ✅ |
+| Phase 2 object storage (FS + LocalStack S3 + Azurite Blob + contract tests) | ✅ |
+| Phase 3 messaging (in-memory + LocalStack SQS + Azurite Queue + Pub/Sub emulator) | ✅ |
+| Phase 4 kind + OpenTelemetry (manifests, probes, compose `otel`) | ✅ |
+| Compose Postgres (+ profiles LocalStack/Azurite/PubSub/otel) | ✅ |
+| Testes unit + API integration + Postgres IT | ✅ |
 | CI security (Gitleaks / Trivy / CodeQL) + agent surface | ✅ |
-| K8s / IaC / OTel / SCA Maven endurecido / live demo | ⚪ Phase 4–6 |
+| GCS object storage | ⚪ REAL_CLOUD / FS APPROX under `gcp` (no official full emulator) |
+| K8s managed (EKS/AKS/GKE) / IaC / SCA Maven endurecido / live demo | ⚪ Phase 5–6 |
 
 ## Portas
 
@@ -84,7 +88,7 @@ Labs AWS/Azure: `docker compose --profile aws|azure up -d` — ver `docs/aws`, `
 | LocalStack | `4566` |
 | Azurite | `10000` / `10001` / `10002` |
 | GCP Pub/Sub emulator | `8085` |
-| OTel collector (futuro) | `4317` |
+| OTel collector | `4317` (gRPC) / `4318` (HTTP) |
 
 ## Licença
 

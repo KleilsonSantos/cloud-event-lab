@@ -1,10 +1,8 @@
 package dev.kleilson.cloudeventlab.adapters.gcp;
 
 /**
- * Placeholder for GCP adapters (Pub/Sub emulator). GCS = REAL_CLOUD or FS APPROX.
- *
- * <p>Activate with profile {@code gcp}. Java client needs explicit emulator channel wiring per
- * Google docs.
+ * GCP adapter package. Pub/Sub: {@link PubSubMessageBusAdapter} (gcloud emulator = LOCAL EMULATOR).
+ * GCS object storage remains FS APPROX / REAL_CLOUD.
  */
 public final class GcpAdaptersPlaceholder {
   private GcpAdaptersPlaceholder() {}
