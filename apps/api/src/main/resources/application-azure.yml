@@ -8,7 +8,9 @@ lab:
   cloud:
     provider: azure
   azure:
-    # Host default ports (10000–10002). Prefer the explicit string when Azurite runs in Docker.
-    storage-connection: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;
+    # Expands to the public Azurite devstoreaccount1 connection (see AzureBlobObjectStorageAdapter).
+    storage-connection: UseDevelopmentStorage=true
     blob:
       container: cloud-event-lab
+      # Host endpoint when Azurite is published on default compose ports.
+      endpoint: http://127.0.0.1:10000/devstoreaccount1

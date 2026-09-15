@@ -14,10 +14,6 @@ import org.testcontainers.utility.DockerImageName;
 @Testcontainers(disabledWithoutDocker = true)
 class AzureBlobObjectStorageContractTest {
 
-  private static final String ACCOUNT = "devstoreaccount1";
-  private static final String KEY =
-      "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
-
   @Container
   @SuppressWarnings("resource")
   static GenericContainer<?> azurite =
@@ -28,11 +24,10 @@ class AzureBlobObjectStorageContractTest {
   @Test
   void putGetDeleteRoundTrip() {
     String endpoint =
-        "http://%s:%d/%s"
-            .formatted(azurite.getHost(), azurite.getMappedPort(10000), ACCOUNT);
+        "http://%s:%d/devstoreaccount1"
+            .formatted(azurite.getHost(), azurite.getMappedPort(10000));
     String connection =
-        "DefaultEndpointsProtocol=http;AccountName=%s;AccountKey=%s;BlobEndpoint=%s;"
-            .formatted(ACCOUNT, KEY, endpoint);
+        AzureBlobObjectStorageAdapter.resolveConnection("UseDevelopmentStorage=true", endpoint);
 
     var containerClient =
         new BlobServiceClientBuilder()

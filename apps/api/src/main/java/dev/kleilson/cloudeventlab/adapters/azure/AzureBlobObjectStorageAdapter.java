@@ -2,6 +2,7 @@ package dev.kleilson.cloudeventlab.adapters.azure;
 
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
+import com.azure.storage.blob.models.BlobHttpHeaders;
 import com.azure.storage.blob.models.BlobStorageException;
 import com.azure.storage.blob.specialized.BlockBlobClient;
 import dev.kleilson.cloudeventlab.application.port.ObjectStoragePort;
@@ -22,14 +23,23 @@ import org.springframework.stereotype.Component;
 @ConditionalOnProperty(name = "lab.cloud.provider", havingValue = "azure")
 public class AzureBlobObjectStorageAdapter implements ObjectStoragePort {
 
+  /**
+   * Well-known Azurite account key published by Microsoft for local emulator use only. Allowlisted
+   * in {@code .gitleaks.toml}.
+   */
+  static final String AZURITE_ACCOUNT_KEY =
+      "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==";
+
   private final BlobContainerClient container;
 
   public AzureBlobObjectStorageAdapter(
       @Value("${lab.azure.storage-connection}") String connectionString,
-      @Value("${lab.azure.blob.container:cloud-event-lab}") String containerName) {
+      @Value("${lab.azure.blob.container:cloud-event-lab}") String containerName,
+      @Value("${lab.azure.blob.endpoint:http://127.0.0.1:10000/devstoreaccount1}")
+          String blobEndpoint) {
     this(
         new BlobServiceClientBuilder()
-            .connectionString(connectionString)
+            .connectionString(resolveConnection(connectionString, blobEndpoint))
             .buildClient()
             .getBlobContainerClient(containerName));
   }
@@ -42,13 +52,23 @@ public class AzureBlobObjectStorageAdapter implements ObjectStoragePort {
     }
   }
 
+  static String resolveConnection(String configured, String blobEndpoint) {
+    if (configured != null && configured.trim().equalsIgnoreCase("UseDevelopmentStorage=true")) {
+      return "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey="
+          + AZURITE_ACCOUNT_KEY
+          + ";BlobEndpoint="
+          + blobEndpoint
+          + ";";
+    }
+    return configured;
+  }
+
   @Override
   public String put(String key, byte[] content, String contentType) {
     BlockBlobClient blob = container.getBlobClient(key).getBlockBlobClient();
     String type = contentType == null ? "application/octet-stream" : contentType;
     blob.upload(new ByteArrayInputStream(content), content.length, true);
-    blob.setHttpHeaders(
-        new com.azure.storage.blob.models.BlobHttpHeaders().setContentType(type));
+    blob.setHttpHeaders(new BlobHttpHeaders().setContentType(type));
     return key;
   }
 

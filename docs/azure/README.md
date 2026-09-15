@@ -31,11 +31,11 @@ Default Azurite ports: blob `10000`, queue `10001`, table `10002`.
 
 | Knob | Lab default | Notes |
 | --- | --- | --- |
-| Connection string | `lab.azure.storage-connection` | Well-known Azurite account `devstoreaccount1` + documented emulator key (not a production secret) |
-| Blob endpoint | `http://127.0.0.1:10000/devstoreaccount1` | Matches compose host ports |
+| Connection string | `UseDevelopmentStorage=true` (`lab.azure.storage-connection`) | Expanded in-adapter to Azurite’s **public** `devstoreaccount1` credentials (documented by Microsoft; allowlisted in `.gitleaks.toml`) |
+| Blob endpoint | `http://127.0.0.1:10000/devstoreaccount1` (`lab.azure.blob.endpoint`) | Matches compose host ports |
 | Container | `cloud-event-lab` | Created on adapter startup if missing |
 
-`UseDevelopmentStorage=true` also works against default Azurite ports from the host; the explicit connection string is preferred for Docker path clarity.
+Do **not** commit real Azure account keys. Emulator credentials are public by design; REAL_CLOUD uses env / secret store only.
 
 ## App profile
 
