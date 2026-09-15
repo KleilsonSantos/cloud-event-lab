@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
@@ -48,6 +49,7 @@ public class SqsMessageBusAdapter implements MessageBusPort {
   private final int waitSeconds;
   private final int visibilitySeconds;
 
+  @Autowired
   public SqsMessageBusAdapter(
       @Value("${lab.aws.endpoint}") String endpoint,
       @Value("${lab.aws.region:us-east-1}") String region,

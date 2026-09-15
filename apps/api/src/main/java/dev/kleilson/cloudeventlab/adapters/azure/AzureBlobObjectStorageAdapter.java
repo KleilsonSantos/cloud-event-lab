@@ -9,6 +9,7 @@ import dev.kleilson.cloudeventlab.application.port.ObjectStoragePort;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
@@ -32,6 +33,7 @@ public class AzureBlobObjectStorageAdapter implements ObjectStoragePort {
 
   private final BlobContainerClient container;
 
+  @Autowired
   public AzureBlobObjectStorageAdapter(
       @Value("${lab.azure.storage-connection}") String connectionString,
       @Value("${lab.azure.blob.container:cloud-event-lab}") String containerName,
