@@ -1,0 +1,15 @@
+# OpenTelemetry export to local collector (compose profile `otel` or kind sidecar later).
+# Classification: OTel SDK = portable; collector backends here are LOCAL / OPEN SOURCE — not CloudWatch / App Insights / Cloud Trace.
+spring:
+  config:
+    activate:
+      on-profile: otel
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:4318/v1/traces}
+      transport: http
