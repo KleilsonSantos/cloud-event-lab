@@ -11,8 +11,8 @@ Lab precisa de AppSec/DevSecOps baseline (SCA/SAST, secrets, least privilege) se
 
 - Validação de input na API; auth baseline (API key ou JWT local no MVP).  
 - Secrets só env / secret store; `.env` gitignored.  
-- CI: Gitleaks + Trivy + CodeQL (+ Semgrep opcional); Dependency scan no build Java (endurecer na Phase 5).  
-- Containers: non-root quando viável; scans de imagem.
+- CI: Gitleaks + Trivy (fs + API image) + CodeQL (+ Semgrep opcional); Maven SCA fail-closed via Trivy rootfs on packaged `apps/api/target` (Phase 5).  
+- Containers: non-root when viable; image scan on API Dockerfile in CI.
 
 ## Alternatives
 

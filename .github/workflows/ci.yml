@@ -38,6 +38,25 @@ jobs:
           cache: maven
       - name: Unit & integration tests
         run: mvn -B test
+      - name: Package API
+        run: mvn -B -DskipTests package
+      - name: Maven SCA (Trivy on packaged artifacts)
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: rootfs
+          scan-ref: apps/api/target
+          severity: CRITICAL,HIGH
+          exit-code: "1"
+          ignore-unfixed: true
+      - name: Build API image
+        run: docker build -t cloud-event-lab-api:${{ github.sha }} .
+      - name: Trivy image (API Dockerfile)
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: cloud-event-lab-api:${{ github.sha }}
+          severity: CRITICAL,HIGH
+          exit-code: "1"
+          ignore-unfixed: true
 
   web:
     runs-on: ubuntu-latest

@@ -47,11 +47,11 @@ Ordem: **entrega incremental**. Cada fase termina com checklist verificável.
 
 ## Phase 5 — IaC + DevSecOps
 
-- [ ] OpenTofu/Terraform skeletons `infra/aws|azure|gcp`  
+- [x] OpenTofu/Terraform skeletons `infra/aws|azure|gcp`  
 - [x] GitHub Actions: build, test, Gitleaks, Trivy, CodeQL  
 - [x] Docs de security scanning (`SECURITY.md`, `docs/security/`)  
-- [ ] Maven dependency SCA endurecido (fail-closed)  
-- [ ] Trivy image scan no Dockerfile da API  
+- [x] Maven dependency SCA endurecido (fail-closed)  
+- [x] Trivy image scan no Dockerfile da API  
 
 ## Phase 6 — Public demo
 
