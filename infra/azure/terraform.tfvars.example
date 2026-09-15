@@ -1,0 +1,3 @@
+# Copy to terraform.tfvars locally — never commit subscription secrets.
+location     = "eastus"
+project_name = "cloud-event-lab"
