@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
@@ -37,6 +38,7 @@ public class AzureQueueMessageBusAdapter implements MessageBusPort {
   private final ExecutorService poller = Executors.newCachedThreadPool();
   private final AtomicBoolean running = new AtomicBoolean(true);
 
+  @Autowired
   public AzureQueueMessageBusAdapter(
       @Value("${lab.azure.storage-connection}") String connectionString,
       @Value("${lab.azure.queue.endpoint:http://127.0.0.1:10001/devstoreaccount1}")
