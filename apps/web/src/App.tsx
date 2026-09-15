@@ -24,22 +24,32 @@ const authHeader = () => {
 
 export default function App() {
   const [status, setStatus] = useState<LabStatus | null>(null);
+  const [health, setHealth] = useState<string | null>(null);
   const [events, setEvents] = useState<EventRow[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [type, setType] = useState("order.created");
   const [source, setSource] = useState("web-lab");
+  const [idempotencyKey, setIdempotencyKey] = useState("");
   const [payload, setPayload] = useState('{"sku":"ABC","qty":1}');
+  const [lastId, setLastId] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     setError(null);
     try {
-      const [sRes, eRes] = await Promise.all([
+      const [sRes, hRes, eRes] = await Promise.all([
         fetch("/api/lab/status"),
+        fetch("/health"),
         fetch("/api/events?limit=20", { headers: { Authorization: authHeader() } }),
       ]);
       if (!sRes.ok) throw new Error(`status ${sRes.status}`);
       setStatus(await sRes.json());
+      if (hRes.ok) {
+        const h = (await hRes.json()) as { status?: string };
+        setHealth(h.status ?? "UP");
+      } else {
+        setHealth(null);
+      }
       if (!eRes.ok) throw new Error(`events ${eRes.status}`);
       setEvents(await eRes.json());
     } catch (e) {
@@ -58,6 +68,7 @@ export default function App() {
     setBusy(true);
     setError(null);
     try {
+      const key = idempotencyKey.trim() || crypto.randomUUID();
       const res = await fetch("/api/events", {
         method: "POST",
         headers: {
@@ -67,11 +78,14 @@ export default function App() {
         body: JSON.stringify({
           type,
           source,
-          idempotencyKey: crypto.randomUUID(),
+          idempotencyKey: key,
           payloadJson: payload,
         }),
       });
       if (!res.ok) throw new Error(`ingest ${res.status}`);
+      const created = (await res.json()) as EventRow;
+      setLastId(created.id);
+      if (!idempotencyKey.trim()) setIdempotencyKey(key);
       await refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ingest failed");
@@ -92,8 +106,11 @@ export default function App() {
         <h2>Lab status</h2>
         {status ? (
           <p>
-            provider: <span className="status-ok">{status.cloudProvider}</span> · profiles:{" "}
-            <code>{status.activeProfiles}</code>
+            provider: <span className="status-ok">{status.cloudProvider}</span> · health:{" "}
+            <span className={health === "UP" ? "status-ok" : "status-warn"}>
+              {health ?? "unknown"}
+            </span>{" "}
+            · profiles: <code>{status.activeProfiles}</code>
             <br />
             <small className="status-warn">{status.honesty}</small>
           </p>
@@ -115,6 +132,13 @@ export default function App() {
               <input id="source" value={source} onChange={(e) => setSource(e.target.value)} />
             </div>
           </div>
+          <label htmlFor="idem">idempotencyKey (optional — reuse to demo replay)</label>
+          <input
+            id="idem"
+            value={idempotencyKey}
+            placeholder="leave empty to auto-generate"
+            onChange={(e) => setIdempotencyKey(e.target.value)}
+          />
           <label htmlFor="payload">payloadJson</label>
           <textarea
             id="payload"
@@ -126,6 +150,11 @@ export default function App() {
             {busy ? "Sending…" : "POST /api/events"}
           </button>
         </form>
+        {lastId && (
+          <p>
+            last id: <code>{lastId}</code>
+          </p>
+        )}
         {error && <p className="error">{error}</p>}
       </section>
 
@@ -136,6 +165,7 @@ export default function App() {
             <tr>
               <th>status</th>
               <th>type</th>
+              <th>idempotency</th>
               <th>id</th>
             </tr>
           </thead>
@@ -144,12 +174,17 @@ export default function App() {
               <tr key={ev.id}>
                 <td>{ev.status}</td>
                 <td>{ev.type}</td>
-                <td>{ev.id.slice(0, 8)}…</td>
+                <td>
+                  <code>{ev.idempotencyKey.slice(0, 12)}…</code>
+                </td>
+                <td>
+                  <code>{ev.id}</code>
+                </td>
               </tr>
             ))}
             {events.length === 0 && (
               <tr>
-                <td colSpan={3}>No events yet</td>
+                <td colSpan={4}>No events yet</td>
               </tr>
             )}
           </tbody>
