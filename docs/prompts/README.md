@@ -7,6 +7,7 @@ Optional, versioned markdown runbooks for coding agents. **Not** application run
 - Prefer ADRs + architecture docs over these prompts when they conflict.
 - Keep prompts short; point to SSOT paths instead of duplicating policy.
 - Name files `by-domain/<domain>/<slug>.vN.md`.
+- These runbooks are the lab’s intentional **Prompt → Loop** layer for agents (Owner Cadence). They are **not** an in-app LangGraph/multi-agent runtime — see [inspirations-and-non-goals.md](../architecture/inspirations-and-non-goals.md).
 
 ## Index
 

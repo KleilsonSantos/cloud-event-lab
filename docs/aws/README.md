@@ -1,19 +1,25 @@
-# AWS lab (LocalStack)
+# AWS lab (LocalStack + optional Floci)
 
 ## Classification
 
 | Item | Type |
 | --- | --- |
-| LocalStack S3 / SQS / SNS / DynamoDB | **LOCAL EMULATOR** |
+| LocalStack S3 / SQS / SNS / DynamoDB | **LOCAL EMULATOR** (default profile `aws`) |
+| Floci (optional profile `aws-floci`) | **LOCAL EMULATOR** / **OPEN SOURCE ALTERNATIVE** (MIT) — spike |
 | Real AWS account | **REAL CLOUD** |
 | Parity with production AWS | **Never assumed** |
 
+Context: [inspirations-and-non-goals.md](../architecture/inspirations-and-non-goals.md).
+
 ## Official references
 
-- Services: https://docs.localstack.cloud/aws/services/
-- Pricing / Hobby: https://localstack.cloud/pricing (Hobby free **non-commercial** — revalidate on use date)
+- LocalStack services: https://docs.localstack.cloud/aws/services/
+- LocalStack pricing / Hobby: https://localstack.cloud/pricing (Hobby free **non-commercial** — revalidate on use date)
+- Floci: https://github.com/floci-io/floci · https://floci.io/floci/
 
 ## Compose
+
+Default (LocalStack):
 
 ```bash
 ./scripts/preflight.sh
@@ -21,7 +27,16 @@ cd deploy/compose
 docker compose --profile aws up -d
 ```
 
-## Auth / endpoint (LocalStack)
+Optional spike (Floci — **stop** LocalStack first; both use `:4566`):
+
+```bash
+./scripts/preflight.sh
+cd deploy/compose
+docker compose --profile aws down   # if LocalStack was up
+docker compose --profile aws-floci up -d
+```
+
+## Auth / endpoint (emulator on :4566)
 
 | Knob | Lab default | Notes |
 | --- | --- | --- |
@@ -52,4 +67,6 @@ mvn spring-boot:run -Dspring-boot.run.profiles=aws
 ## Limitações conhecidas
 
 - Auth/account obrigatória no modelo LocalStack atual (2026).
-- Não deployar LocalStack como “produção AWS” em ambiente público.
+- Não deployar LocalStack/Floci como “produção AWS” em ambiente público.
+- Floci marketing for Azure/GCP emulators is **NÃO VALIDADO** in this lab — Azure stays Azurite; GCP stays Pub/Sub emulator / FS APPROX.
+- Contract tests / smoke against Floci: treat as **spike** until green on S3+SQS paths; keep LocalStack as the documented default.

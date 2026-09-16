@@ -25,6 +25,12 @@
 - **Não** tratar LocalStack como AWS produção.  
 - Features avançadas / K8s executor: planos pagos ([docs K8s](https://docs.localstack.cloud/aws/customization/kubernetes/)).
 
+### Floci (AWS — optional)
+
+- MIT local AWS emulator ([floci-io/floci](https://github.com/floci-io/floci)); Compose profile `aws-floci`.  
+- Classification: **LOCAL EMULATOR** / **OPEN SOURCE ALTERNATIVE**. Default lab path remains LocalStack (`aws`).  
+- Marketing for Azure/GCP Floci images: **NÃO VALIDADO** here (see [inspirations-and-non-goals.md](./inspirations-and-non-goals.md)).
+
 ### Azure
 
 - **Azurite**: Blob, Queue, Table — oficial ([MS Learn](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite)).  

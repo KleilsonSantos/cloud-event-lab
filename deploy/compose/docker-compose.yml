@@ -33,6 +33,20 @@ services:
     networks:
       - cel_net
 
+  # Optional spike: docker compose --profile aws-floci up
+  # LOCAL EMULATOR / OPEN SOURCE ALTERNATIVE (MIT). Exclusive with profile `aws` (same host port 4566).
+  # Do not treat as production AWS. Do not assume Floci Azure/GCP images are validated in this lab.
+  floci:
+    profiles: ["aws-floci"]
+    image: floci/floci:1.5.14
+    container_name: cel-floci
+    ports:
+      - "4566:4566"
+    volumes:
+      - cel_floci_data:/app/data
+    networks:
+      - cel_net
+
   # Optional: docker compose --profile azure up
   azurite:
     profiles: ["azure"]
@@ -80,4 +94,5 @@ networks:
 volumes:
   cel_pg_data:
   cel_localstack_data:
+  cel_floci_data:
   cel_azurite_data:
